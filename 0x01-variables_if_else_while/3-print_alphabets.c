@@ -8,11 +8,12 @@ int main(void)
 {
 	char alpha[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	int i;
-		while (alpha[i])
-		{
-			putchar(alpha[i]);
-			i++;
-		}
-			putchar('\n');
+		i = 0;
+			while (alpha[i])
+			{
+				putchar(alpha[i]);
+				i++;
+			}
+					putchar('\n');
 	return (0);
 }
