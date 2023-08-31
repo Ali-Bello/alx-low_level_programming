@@ -23,7 +23,7 @@ int	_prime_check(int nb, int i)
 
 int	is_prime_number(int n)
 {
-	if (nb <= 1)
+	if (n <= 1)
 		return (0);
 	return (_prime_check(n, n / 2));
 }
