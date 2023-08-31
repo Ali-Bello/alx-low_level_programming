@@ -25,9 +25,9 @@ int	_sqrt_recursion(int n)
 	int	precision;
 	int	x;
 
-	if (nb < 0)
+	if (n < 0)
 		return (-1);
-	x = nb;
+	x = n;
 	precision = 1;
 	return (_calculate(nb, precision, x));
 }
