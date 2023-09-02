@@ -1,68 +1,72 @@
-#include "main.h"
 #include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include <string.h>
 
 /**
- * _atoi - converts a string to an integer
- * @s: string to be converted
- * Return: the int converted from the string
+ * check_num - check - string there are digit
+ * @str: array str
+ *
+ * Return: Always 0 (Success)
  */
-int	_atoi(char *s)
-{
-	int	result;
-	int	sign;
-	int	i;
 
-	i = 0;
-	sign = 1;
-	result = 0;
-	while (s[i] == ' ')
-		i++;
-	if (s[i] == '-')
+int check_num(char *str)
+{
+	/*Declaring variables*/
+	unsigned int count;
+
+	count = 0;
+	while (count < strlen(str)) /*count string*/
+
 	{
-		sign *= -1;
-		i++;
+		if (!isdigit(str[count])) /*check if str there are digit*/
+		{
+			return (0);
+		}
+
+		count++;
 	}
-	if (!(s[i] >= '0' && s[i] <= '9'))
-		return (0);
-	while (s[i] >= '0' && s[i] <= '9')
-	{
-		result = result * 10 + (s[i] - '0');
-		i++;
-	}
-	return (sign * result);
+	return (1);
 }
 
 /**
  * main - Print the name of the program
  * @argc: Count arguments
  * @argv: Arguments
+ *
  * Return: Always 0 (Success)
  */
 
-int	main(int argc, char **argv)
-{
-	if (argc > 1)
-	{
-		int	result;
-		int	tmp;
-		int	i;
+int main(int argc, char *argv[])
 
-		i = 1;
-		result = 0;
-		while (argv[i])
+{
+
+	/*Declaring variables*/
+	int count;
+	int str_to_int;
+	int sum = 0;
+
+	count = 1;
+	while (count < argc) /*Goes through the whole array*/
+	{
+		if (check_num(argv[count]))
+
 		{
-			tmp = _atoi(argv[i]);
-			if (tmp == 0)
-			{
-				printf("Error\n");
-				return (1);
-			}
-			result += tmp;
-			i++;
+			str_to_int = atoi(argv[count]); /*ATOI --> convert string to int*/
+			sum += str_to_int;
 		}
-		printf("%d\n", result);
+
+		/*Condition if one of the number contains symbols that are not digits*/
+		else
+		{
+			printf("Error\n");
+			return (1);
+		}
+
+		count++;
 	}
-	else
-		printf("0\n");
+
+	printf("%d\n", sum); /*print sum*/
+
 	return (0);
 }
