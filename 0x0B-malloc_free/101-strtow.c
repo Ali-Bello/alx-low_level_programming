@@ -1,125 +1,77 @@
-#include "main.h"
 #include <stdlib.h>
+#include "main.h"
 
 /**
-  * _strcat - catinates src into dest.
-  * @dest: destination string.
-  * @src: source string.
-  * @len: catinates upto len elements.
-  */
-
-void	_strcat(char *dest, char *src, int len)
+ * count_word - helper function to count the number of words in a string
+ * @s: string to evaluate
+ *
+ * Return: number of words
+ */
+int count_word(char *s)
 {
-	int	i;
-	int	j;
+	int flag, c, w;
 
-	i = 0;
-	j = 0;
-	while (j < len)
-	{
-		dest[i] = src[j];
-		i++;
-		j++;
-	}
-	dest[i] = '\0';
-}
-
-/**
-  * _strlen - returns the length of a string.
-  * @s: the string.
-  * Return: the length.
-  */
-
-int	_strlen(char *s)
-{
-	int	i;
-
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
-}
-
-/**
-  * _wd_count - counts how many words in a string.
-  * @str: the string to get the words from.
-  * Return: a 2D array with words size.
-  */
-
-char	**_wd_count(char *str)
-{
-	int	i;
-	int	count;
-	int	flag;
-	char	**ptr;
-
-	i = 0;
-	count = 0;
 	flag = 0;
-	while (str[i])
+	w = 0;
+
+	for (c = 0; s[c] != '\0'; c++)
 	{
-		if (str[i] == ' ')
+		if (s[c] == ' ')
 			flag = 0;
 		else if (flag == 0)
 		{
-			count++;
 			flag = 1;
+			w++;
 		}
-		i++;
 	}
-	ptr = malloc(sizeof(char *) * (count + 1));
-	if (ptr == NULL)
-		return (NULL);
-	ptr[count] = NULL;
-	return (ptr);
+
+	return (w);
 }
-
 /**
-  * fill_array - fill a 2D array with the correct words.
-  * @str: the src of the words.
-  * @p: the 2D array.
-  */
-
-void	fill_array(char *str, char **p)
+ * **strtow - splits a string into words
+ * @str: string to split
+ *
+ * Return: pointer to an array of strings (Success)
+ * or NULL (Error)
+ */
+char **strtow(char *str)
 {
-	int	flag;
-	int	i;
-	int	j;
+	char **matrix, *tmp;
+	int i, k = 0, len = 0, words, c = 0, start, end;
 
-	i = 0;
-	j = 0;
-	while (str[i])
+	while (*(str + len))
+		len++;
+	words = count_word(str);
+	if (words == 0)
+		return (NULL);
+
+	matrix = (char **) malloc(sizeof(char *) * (words + 1));
+	if (matrix == NULL)
+		return (NULL);
+
+	for (i = 0; i <= len; i++)
 	{
-		while (str[i] == ' ')
-			i++;
-		flag = i;
-		while (str[i] != ' ' && str[i])
-			i++;
-		if (i > flag)
+		if (str[i] == ' ' || str[i] == '\0')
 		{
-			p[j] = malloc(sizeof(char) * (i - flag) + 1);
-			_strcat(p[j], str + flag, i - flag);
-			j++;
+			if (c)
+			{
+				end = i;
+				tmp = (char *) malloc(sizeof(char) * (c + 1));
+				if (tmp == NULL)
+					return (NULL);
+				while (start < end)
+					*tmp++ = str[start++];
+				*tmp = '\0';
+				matrix[k] = tmp - c;
+				k++;
+				c = 0;
+			}
 		}
-		i++;
+		else if (c++ == 0)
+			start = i;
 	}
-}
 
-/**
-  * strtow - splits a string into 2D array containing each word.
-  * @str: the string.
-  * Return: the 2D array.
-  */
+	matrix[k] = NULL;
 
-char	**strtow(char *str)
-{
-	char	**ptr;
-
-	if (str == NULL || !*str)
-		return (NULL);
-	ptr = _wd_count(str);
-	if (ptr == NULL)
-		return (NULL);
-	fill_array(str, ptr);
-	return (ptr);
+	return (matrix);
 }
