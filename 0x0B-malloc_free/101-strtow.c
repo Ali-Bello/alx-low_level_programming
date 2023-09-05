@@ -69,7 +69,7 @@ void	_array_fill(char **arr, char *str)
 			i++;
 		if (i > flag)
 		{
-			arr[j] = malloc(sizeof(char) * (i - flag));
+			arr[j] = malloc(sizeof(char) * (i - flag) + 1);
 			_strxcpy(arr[j++], str + flag, i - flag);
 		}
 	}
@@ -88,7 +88,7 @@ char **strtow(char *str)
 	char	**array;
 	int	size;
 
-	if (str == NULL || *str == 0 || str == " ")
+	if (str == NULL || *str == 0)
 		return (NULL);
 	size = _wd_count(str);
 	array = malloc(sizeof(char *) * (size + 1));
