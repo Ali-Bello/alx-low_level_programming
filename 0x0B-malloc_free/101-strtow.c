@@ -2,31 +2,79 @@
 #include "main.h"
 
 /**
- * count_word - helper function to count the number of words in a string
- * @s: string to evaluate
- *
+  * _strxcpy - copy upto max elements from src to dest.
+  * @dest: destination string.
+  * @src: source string.
+  * @max: the max number of elements.
+  * Return: none.
+  */
+
+void	_strxcpy(char *dest, char *src, int max)
+{
+	int	i;
+
+	i = 0;
+	while (i < max)
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	dest[i] = 0;
+}
+
+/**
+ * _wd_count - count the number of words in a string.
+ * @str: string to evaluate.
  * Return: number of words
  */
-int count_word(char *s)
+
+int	_wd_count(char *str)
 {
-	int flag, c, w;
+	int	i, count, flag;
 
-	flag = 0;
-	w = 0;
-
-	for (c = 0; s[c] != '\0'; c++)
+	i = 0;
+	count = 0;
+	while (str[i])
 	{
-		if (s[c] == ' ')
-			flag = 0;
-		else if (flag == 0)
+		while (str[i] == ' ')
+			i++;
+		flag = i;
+		while (str[i] != ' ' && str[i])
+			i++;
+		if (i > flag)
+			count++;
+	}
+	return (count);
+}
+
+/**
+  * _array_fill - fill 2D array with the right strings.
+  * @arr: the 2D array.
+  * @str: the src of the strings.
+  * Return: none.
+  */
+
+void	_array_fill(char **arr, char *str)
+{
+	int	i, j, flag;
+
+	i = 0;
+	j = 0;
+	while (str[i])
+	{
+		while (str[i] == ' ')
+			i++;
+		flag = i;
+		while (str[i] != ' ' && str[i])
+			i++;
+		if (i > flag)
 		{
-			flag = 1;
-			w++;
+			arr[j] = malloc(sizeof(char) * (i - flag));
+			_strxcpy(arr[j++], str + flag, i - flag);
 		}
 	}
-
-	return (w);
 }
+
 /**
  * **strtow - splits a string into words
  * @str: string to split
@@ -34,44 +82,19 @@ int count_word(char *s)
  * Return: pointer to an array of strings (Success)
  * or NULL (Error)
  */
+
 char **strtow(char *str)
 {
-	char **matrix, *tmp;
-	int i, k = 0, len = 0, words, c = 0, start, end;
+	char	**array;
+	int	size;
 
-	while (*(str + len))
-		len++;
-	words = count_word(str);
-	if (words == 0)
+	if (str == NULL || *str == 0)
 		return (NULL);
-
-	matrix = (char **) malloc(sizeof(char *) * (words + 1));
-	if (matrix == NULL)
+	size = _wd_count(str);
+	array = malloc(sizeof(char *) * (size + 1));
+	if (array == NULL)
 		return (NULL);
-
-	for (i = 0; i <= len; i++)
-	{
-		if (str[i] == ' ' || str[i] == '\0')
-		{
-			if (c)
-			{
-				end = i;
-				tmp = (char *) malloc(sizeof(char) * (c + 1));
-				if (tmp == NULL)
-					return (NULL);
-				while (start < end)
-					*tmp++ = str[start++];
-				*tmp = '\0';
-				matrix[k] = tmp - c;
-				k++;
-				c = 0;
-			}
-		}
-		else if (c++ == 0)
-			start = i;
-	}
-
-	matrix[k] = NULL;
-
-	return (matrix);
+	array[size] = NULL;
+	_array_fill(array, str);
+	return (array);
 }
