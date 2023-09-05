@@ -91,6 +91,8 @@ char **strtow(char *str)
 	if (str == NULL || *str == 0)
 		return (NULL);
 	size = _wd_count(str);
+	if (!size)
+		return (NULL);
 	array = malloc(sizeof(char *) * (size + 1));
 	if (array == NULL)
 		return (NULL);
