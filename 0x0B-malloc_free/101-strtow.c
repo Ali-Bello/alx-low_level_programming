@@ -88,7 +88,7 @@ char **strtow(char *str)
 	char	**array;
 	int	size;
 
-	if (str == NULL || *str == 0)
+	if (str == NULL || *str == 0 || str == " ")
 		return (NULL);
 	size = _wd_count(str);
 	array = malloc(sizeof(char *) * (size + 1));
