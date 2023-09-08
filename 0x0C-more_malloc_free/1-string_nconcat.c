@@ -1,16 +1,15 @@
-#include <stdlib.h>
 #include "main.h"
-
+#include <stdlib.h>
 
 /**
-  * _strlen - calculcates the length of a string.
+  * _strlen - calculcate the length of a string.
   * @str: the string.
   * Return: the length.
   */
 
-int	_strlen(char *str)
+unsigned int	_strlen(char *str)
 {
-	int	i;
+	unsigned int	i;
 
 	i = 0;
 	while (str[i])
@@ -19,42 +18,57 @@ int	_strlen(char *str)
 }
 
 /**
- * *string_nconcat - concatenates n bytes of a string to another string
- * @s1: string to append to
- * @s2: string to concatenate from
- * @n: number of bytes from s2 to concatenate to s1
- *
- * Return: pointer to the resulting string
- */
-char *string_nconcat(char *s1, char *s2, unsigned int n)
+  * _concat - concatinates string1 && upto n elements from string2 into dest.
+  * @dest: the destination string.
+  * @s1: string1.
+  * @s2: string2.
+  * @n: number of elements to copy from s2.
+  * Return: none.
+  */
+
+void	_concat(char *dest, char *s1, char *s2, unsigned int n)
 {
-	char *s;
-	unsigned int len1, len2, i = 0, j = 0;
+	int		i;
+	unsigned int	j;
 
-	len1 = _strlen(s1);
-	len2 = _strlen(s2);
-
-	if (n < len2)
-		s = malloc(sizeof(char) * (len1 + n + 1));
-	else
-		s = malloc(sizeof(char) * (len1 + len2 + 1));
-
-	if (!s)
-		return (NULL);
-
-	while (i < len1)
+	i = 0;
+	while (s1[i])
 	{
-		s[i] = s1[i];
+		dest[i] = s1[i];
 		i++;
 	}
+	j = 0;
+	while (j < n && s2[j])
+		dest[i++] = s2[j++];
+	dest[i] = '\0';
+}
 
-	while (n < len2 && i < (len1 + n))
-		s[i++] = s2[j++];
+/**
+  * string_nconcat - concatinate s1 and n elements from s2
+  * in a newly allocated string.
+  * @s1: string1.
+  * @s2: string2.
+  * @n: number of elements to cpy from s2.
+  * Return: pointer to the newly created string (on succes).
+  */
 
-	while (n >= len2 && i < (len1 + len2))
-		s[i++] = s2[j++];
+char	*string_nconcat(char *s1, char *s2, unsigned int n)
+{
+	int		size;
+	unsigned int	len2;
+	char		*ptr;
 
-	s[i] = '\0';
-
-	return (s);
+	if (!s1)
+		s1 = "";
+	if (!s2)
+		s2 = "";
+	len2 = _strlen(s2);
+	if (n < len2)
+		len2 = n;
+	size = _strlen(s1) + len2 + 1;
+	ptr = malloc(sizeof(char) * size);
+	if (ptr == NULL)
+		return (NULL);
+	_concat(ptr, s1, s2, n);
+	return (ptr);
 }
