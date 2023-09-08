@@ -7,9 +7,9 @@
   * Return: the length.
   */
 
-int	_strlen(char *str)
+unsigned int	_strlen(char *str)
 {
-	int	i;
+	unsigned int	i;
 
 	i = 0;
 	while (str[i])
@@ -54,9 +54,9 @@ void	_concat(char *dest, char *s1, char *s2, unsigned int n)
 
 char	*string_nconcat(char *s1, char *s2, unsigned int n)
 {
-	int	size;
-	char	*ptr;
-	int	len2;
+	int		size;
+	unsigned int	len2;
+	char		*ptr;
 
 	len2 = _strlen(s2);
 	if (n < len2)
