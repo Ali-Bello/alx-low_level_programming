@@ -57,7 +57,9 @@ char	*string_nconcat(char *s1, char *s2, unsigned int n)
 	int		size;
 	unsigned int	len2;
 	char		*ptr;
-
+	
+	if (!*s1 || !*s2)
+		return (NULL);
 	len2 = _strlen(s2);
 	if (n < len2)
 		len2 = n;
