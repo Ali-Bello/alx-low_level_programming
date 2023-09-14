@@ -24,7 +24,10 @@ int	main(int ac, char **av)
 		}
 		ptr = (char *)main;
 		while (i < bytes)
-			printf("%02hhx ", ptr[i++]);
+		{
+			printf("%02hhx ", ptr[i]);
+			i++;
+		}
 		printf("\n");
 		return (0);
 	}
