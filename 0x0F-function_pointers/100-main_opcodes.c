@@ -10,10 +10,11 @@
 
 int	main(int ac, char **av)
 {
+	char	*ptr;
+	int	bytes, i;
+
 	if (ac == 2)
 	{
-		char	*ptr;
-		int	i, bytes;
 
 		i = 0;
 		bytes = atoi(av[1]);
@@ -25,10 +26,12 @@ int	main(int ac, char **av)
 		ptr = (char *)main;
 		while (i < bytes)
 		{
-			printf("%02hhx ", ptr[i]);
+			if (i == bytes - 1)
+				printf("%02hhx\n", ptr[i]);
+			else
+				printf("%02hhx ", ptr[i]);
 			i++;
 		}
-		printf("\n");
 		return (0);
 	}
 	printf("Error\n");
