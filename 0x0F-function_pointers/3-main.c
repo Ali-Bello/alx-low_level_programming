@@ -20,7 +20,7 @@ int	main(int __attribute__((__unused__)) ac, char **av)
 		exit(98);
 	}
 	p = get_op_func(av[2]);
-	if (!p || av[2][1] != '\0')
+	if (!p || av[2][1])
 	{
 		printf("Error\n");
 		exit(99);
