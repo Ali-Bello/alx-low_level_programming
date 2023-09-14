@@ -35,3 +35,4 @@ int	main(int __attribute__((__unused__)) ac, char **av)
 	}
 	printf("%d\n", p(num1, num2));
 	return (0);
+}
