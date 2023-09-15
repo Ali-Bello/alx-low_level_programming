@@ -3,48 +3,43 @@
 #include <stdio.h>
 
 /**
- * print_all - prints anything
- * @format: list of types of arguments passed to the function
- */
-void print_all(const char * const format, ...)
+  * print_all - prints every argument passed.
+  * @format: the order to follow.
+  * @...: variables arguments.
+  */
+
+void	print_all(const char * const format, ...)
 {
-	int i = 0;
-	char *str, *sep = "";
+	va_list		args;
+	unsigned int	i;
+	char		*tmp, *sep;
 
-	va_list list;
-
-	va_start(list, format);
-
-	if (format)
+	i = 0;
+	sep = ", ";
+	va_start(args, format);
+	while (format[i])
 	{
-		while (format[i])
+		switch (format[i])
 		{
-			switch (format[i])
-			{
-				case 'c':
-					printf("%s%c", sep, va_arg(list, int));
-					break;
-				case 'i':
-					printf("%s%d", sep, va_arg(list, int));
-					break;
-				case 'f':
-					printf("%s%f", sep, va_arg(list, double));
-					break;
-				case 's':
-					str = va_arg(list, char *);
-					if (!str)
-						str = "(nil)";
-					printf("%s%s", sep, str);
-					break;
-				default:
-					i++;
-					continue;
-			}
-			sep = ", ";
-			i++;
+			case 'c':
+				printf("%c%s", va_arg(args, int), sep);
+				break;
+			case 'i':
+				printf("%d%s", va_arg(args, int), sep);
+				break;
+			case 'f':
+				printf("%f%s", va_arg(args, double), sep);
+				break;
+			case 's':
+				tmp = va_arg(args, char *);
+				if (!tmp)
+					tmp = "(nil)";
+				printf("%s%s", tmp, sep);
+				break;
 		}
+		if (!format[++i + 1])
+			sep = "";
 	}
-
 	printf("\n");
-	va_end(list);
+	va_end(args);
 }
