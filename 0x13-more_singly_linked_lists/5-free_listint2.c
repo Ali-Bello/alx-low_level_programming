@@ -5,19 +5,18 @@
  * @head: ptr to the list.
 */
 
-void	free_listint2(listint_t **head)
+void    free_listint2(listint_t **head)
 {
-	listint_t	*temp;
+    listint_t    *tmp;
 
-	if (head == NULL)
-		return;
-
-	while (*head)
-	{
-		temp = (*head)->next;
-		free(*head);
-		*head = temp;
-	}
-
-	*head = NULL;
+    if (head)
+    {
+        while ((*head))
+        {
+            tmp = (*head)->next;
+            free((*head));
+            (*head) = tmp;
+        }
+        (*head) = NULL;
+    }
 }
