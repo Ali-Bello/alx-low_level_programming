@@ -4,7 +4,7 @@
  * delete_nodeint_at_index - deletes node at given index.
  * @head: ptr to a list.
  * @index: the given index.
- * Return: 1 if succes , 0 otherwise.
+ * Return: 1 if succes , -1 otherwise.
 */
 
 int	delete_nodeint_at_index(listint_t **head, unsigned int index)
@@ -37,5 +37,5 @@ int	delete_nodeint_at_index(listint_t **head, unsigned int index)
 		}
 	}
 
-	return (0);
+	return (-1);
 }
